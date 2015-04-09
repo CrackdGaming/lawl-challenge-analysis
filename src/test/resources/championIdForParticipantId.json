@@ -1,0 +1,16 @@
+{
+  "participants": [
+    {
+      "championId": 81,
+      "participantId": 1
+    },
+    {
+      "championId": 82,
+      "participantId": 2
+    },
+    {
+      "championId": 83,
+      "participantId": 3
+    }
+  ]
+}

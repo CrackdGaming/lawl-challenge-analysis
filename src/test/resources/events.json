@@ -1,0 +1,37 @@
+{
+  "timeline": {
+    "frames": [
+      {
+        "events": [
+          {
+            "eventType": "EVENT_A",
+            "position": null
+          },
+          {
+            "eventType": "EVENT_B",
+            "position": null
+          }
+        ]
+      },
+      {
+        "events": [
+          {
+            "eventType": "EVENT_C",
+            "position" : {
+              "x": 100,
+              "y": 100
+            }
+          }
+        ]
+      },
+      {
+        "events": [
+          {
+            "eventType": "EVENT_B",
+            "position": null
+          }
+        ]
+      }
+    ]
+  }
+}

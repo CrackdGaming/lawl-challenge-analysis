@@ -1,5 +1,8 @@
 package com.crackd.lawlchallenge
 
+import com.crackd.lawlchallenge.gametypes._
+import com.crackd.lawlchallenge.helpers.GameDataFinders._
+
 import play.api.libs.json._
 
 import scala.language.postfixOps
@@ -12,9 +15,7 @@ object HeatMap {
 }
 
 class HeatMap {
-  def apply(json: JsValue): JsValue = layerGroupsToJson(toEventSeq(json).map(toAtomSeq).groupBy(_.e).map(toLayerGroups).toSeq)
-
-  def toEventSeq(j: JsValue) = (j \ "timeline" \ "frames" \\ "events").asInstanceOf[Seq[JsArray]].flatMap(_.value).filter(j => (j \ "position") != JsNull)
+  def apply(json: JsValue): JsValue = layerGroupsToJson(json.events.withPositions.map(toAtomSeq).groupBy(_.e).map(toLayerGroups).toSeq)
 
   def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j),getPoint(j),1L)
   
@@ -29,9 +30,6 @@ class HeatMap {
   def layerGroupsToJson(s: Seq[LayerGroup]): JsValue = Json.toJson(s.sortBy(_.e))
 
   type Count = Long
-  type EventType = String
-
-  case class Point(x: Int, y: Int)
 
   case class Atom(e: EventType, p: Point, c: Count)
 

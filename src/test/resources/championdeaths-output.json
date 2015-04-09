@@ -1,0 +1,26 @@
+[
+	{
+		"killer": 82,
+		"victim": 81,
+		"kills": 2,
+		"assists": 0
+	},
+	{
+		"killer": 81,
+		"victim": 82,
+		"kills": 1,
+		"assists": 0
+	},
+	{
+		"killer": 81,
+		"victim": 83,
+		"kills": 1,
+		"assists": 0
+	},
+	{
+		"killer": 83,
+		"victim": 81,
+		"kills": 0,
+		"assists": 2
+	}
+]

@@ -2,7 +2,7 @@ import com.typesafe.sbt.SbtNativePackager.NativePackagerKeys._
 
 packageArchetype.java_application
 
-name := "lawl-challenge-data-import"
+name := "lawl-challenge-analysis"
 
 version := "1.0"
 
