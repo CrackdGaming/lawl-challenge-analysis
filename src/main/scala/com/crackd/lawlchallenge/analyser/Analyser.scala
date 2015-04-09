@@ -6,6 +6,6 @@ import play.api.libs.json.JsValue
 /**
  * Created by trent ahrens on 4/9/15.
  */
-abstract class Analyser[A] {
+trait Analyser[A] {
   def apply(json: JsValue): Statistic[A]
 }
