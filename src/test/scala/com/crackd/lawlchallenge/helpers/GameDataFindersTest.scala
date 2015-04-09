@@ -7,8 +7,8 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._
 
 /**
- * Created by tahrens on 4/9/15.
- */
+*  Created by trent ahrens on 4/9/15.
+*/
 class GameDataFindersTest extends FlatSpec with Matchers {
   it should "lookup champion id by participant id" in {
     val json = JsonLoader.load("/championIdForParticipantId.json")

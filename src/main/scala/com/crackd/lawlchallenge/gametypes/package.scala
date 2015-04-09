@@ -1,8 +1,8 @@
 package com.crackd.lawlchallenge
 
 /**
- * Created by tahrens on 4/9/15.
- */
+*  Created by trent ahrens on 4/9/15.
+*/
 package object gametypes {
   type ParticipantId = Int
   type ChampionId = Int

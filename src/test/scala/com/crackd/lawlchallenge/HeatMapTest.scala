@@ -5,8 +5,8 @@ import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json.Json
 
 /**
- * Created by tahrens on 4/9/15.
- */
+*  Created by trent ahrens on 4/9/15.
+*/
 class HeatMapTest extends FlatSpec with Matchers {
   it should "generate correct json result" in {
     val input = JsonLoader.load("/heatmap-input.json")

@@ -8,8 +8,8 @@ import play.api.libs.json._
 import scala.language.postfixOps
 
 /**
- * Created by tahrens on 4/9/15.
- */
+*  Created by trent ahrens on 4/9/15.
+*/
 object HeatMap {
   def apply() = new HeatMap()
 }

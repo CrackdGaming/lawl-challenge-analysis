@@ -6,25 +6,27 @@ import play.api.libs.json.{JsNull, JsArray, JsValue}
 import scala.language.implicitConversions
 
 /**
- * Created by tahrens on 4/9/15.
- */
+*  Created by trent ahrens on 4/9/15.
+*/
+
+class Events(s: Seq[JsValue]) extends Seq[JsValue] {
+  def withPositions = filter(j => (j \ "position") != JsNull)
+
+  def withType(et: EventType) = filter(j => (j \ "eventType").as[String] == et)
+
+  override def length: ParticipantId = s.length
+
+  override def apply(idx: ParticipantId): JsValue = s(idx)
+
+  override def iterator: Iterator[JsValue] = s.iterator
+}
+
 object GameDataFinders {
-
-  type Events = Seq[JsValue]
-
   class RichGameData(json: JsValue) {
     def championIdForParticipantId(id: ParticipantId): ChampionId = ((json \ "participants").as[JsArray].value.filter(v => (v \ "participantId").as[Int] == id).head \ "championId").as[Int]
 
-    def events: Events = (json \ "timeline" \ "frames" \\ "events").asInstanceOf[Seq[JsArray]].flatMap(_.value)
+    def events: Events = new Events((json \ "timeline" \ "frames" \\ "events").asInstanceOf[Seq[JsArray]].flatMap(_.value))
   }
 
   implicit def richGameData(json: JsValue): RichGameData = new RichGameData(json)
-
-  class RichEvents(e: Events) {
-    def withPositions = e.filter(j => (j \ "position") != JsNull)
-
-    def withType(et: EventType) = e.filter(j => (j \ "eventType").as[String] == et)
-  }
-
-  implicit def richEvents(e: Events): RichEvents = new RichEvents(e)
 }
