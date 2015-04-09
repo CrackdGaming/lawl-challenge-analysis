@@ -1,0 +1,14 @@
+{
+  "timeline": {
+    "frames": [
+      {
+        "events": [
+          {
+            "eventType": "NO_POSITION",
+            "position": null
+          }
+        ]
+      }
+    ]
+  }
+}

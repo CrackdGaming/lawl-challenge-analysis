@@ -1,0 +1,60 @@
+{
+  "timeline": {
+    "frames": [
+      {
+        "events": [
+          {
+            "eventType": "CHAMPION_KILL",
+            "position": {
+              "x": 100,
+              "y": 100
+            }
+          },
+          {
+            "eventType": "CHAMPION_KILL",
+            "position": {
+              "x": 200,
+              "y": 200
+            }
+          },
+          {
+            "eventType": "ELITE_MONSTER_KILL",
+            "position": {
+              "x": 100,
+              "y": 100
+            }
+          }
+        ]
+      },
+      {
+        "events": [
+          {
+            "eventType": "CHAMPION_KILL",
+            "position": {
+              "x": 100,
+              "y": 100
+            }
+          },
+          {
+            "eventType": "CHAMPION_KILL",
+            "position": {
+              "x": 200,
+              "y": 200
+            }
+          }
+        ]
+      },
+      {
+        "events": [
+          {
+            "eventType": "CHAMPION_KILL",
+            "position": {
+              "x": 300,
+              "y": 300
+            }
+          }
+        ]
+      }
+    ]
+  }
+}
