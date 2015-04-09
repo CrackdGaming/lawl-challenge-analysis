@@ -1,8 +1,9 @@
-package com.crackd.lawlchallenge
+package com.crackd.lawlchallenge.analyser
 
+import com.crackd.lawlchallenge.Statistic
+import com.crackd.lawlchallenge.analyser.HeatMapAnalysis._
 import com.crackd.lawlchallenge.gametypes._
 import com.crackd.lawlchallenge.helpers.GameDataFinders._
-
 import play.api.libs.json._
 
 import scala.language.postfixOps
@@ -59,19 +60,15 @@ object HeatMapAnalysis {
   }
 }
 
-class HeatMapAnalysis {
-  import HeatMapAnalysis._
-
+class HeatMapAnalysis extends Analyser[HeatMaps] {
   case class Atom(e: EventType, p: Point, c: Count)
 
-  def apply(json: JsValue): JsValue =
-    Json.toJson(
-      json.events.withPositions
-        .map(toAtomSeq).groupBy(_.e)
-        .foldRight(HeatMaps.empty) {
-          case ((e,s),hms) => hms + (e, s.foldRight(HeatMap.empty)((a,hm) => hm + (a.p, a.c)))
-        }
-    )
+  def apply(json: JsValue): HeatMaps =
+    json.events.withPositions
+      .map(toAtomSeq).groupBy(_.e)
+      .foldRight(HeatMaps.empty) {
+      case ((e, s), hms) => hms +(e, s.foldRight(HeatMap.empty)((a, hm) => hm +(a.p, a.c)))
+    }
 
   def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j),getPoint(j),1L)
 

@@ -1,5 +1,7 @@
-package com.crackd.lawlchallenge
+package com.crackd.lawlchallenge.analyser
 
+import com.crackd.lawlchallenge.Statistic
+import com.crackd.lawlchallenge.analyser.ChampionKillsAnalysis._
 import com.crackd.lawlchallenge.gameconstants.championKill
 import com.crackd.lawlchallenge.gametypes._
 import com.crackd.lawlchallenge.helpers.GameDataFinders.richGameData
@@ -43,10 +45,8 @@ object ChampionKillsAnalysis {
   }
 }
 
-class ChampionKillsAnalysis {
-  import ChampionKillsAnalysis._
-
-  def apply(json: JsValue) = Json.toJson(kills(json)(events(json)) + assists(json)(events(json)))
+class ChampionKillsAnalysis extends Analyser[ChampionKills] {
+  def apply(json: JsValue): ChampionKills = kills(json)(events(json)) + assists(json)(events(json))
 
   def events(json: JsValue): Seq[JsValue] = json.events.withType(championKill)
 
