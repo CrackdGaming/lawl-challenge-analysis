@@ -10,7 +10,7 @@ import play.api.libs.json.Json
 class HeatMapTest extends FlatSpec with Matchers {
   it should "generate correct json result" in {
     val input = JsonLoader.load("/heatmap-input.json")
-    val sut = HeatMap()
+    val sut = HeatMapAnalysis()
     val actual = sut(input)
     val expected = JsonLoader.load("/heatmap-output.json")
     actual shouldBe expected
@@ -18,7 +18,7 @@ class HeatMapTest extends FlatSpec with Matchers {
 
   it should "skip event types with no position" in {
     val input = JsonLoader.load("/heatmap-input-noposition.json")
-    val sut = HeatMap()
+    val sut = HeatMapAnalysis()
     val actual = sut(input)
     val expected = Json.toJson(List.empty[String])
     actual shouldBe expected
