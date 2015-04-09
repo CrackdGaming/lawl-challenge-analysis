@@ -15,6 +15,17 @@ object HeatMap {
 }
 
 class HeatMap {
+  type Count = Long
+
+  case class Atom(e: EventType, p: Point, c: Count)
+
+  case class Layer(m: Map[Point,Count]) {
+    def +(p: Point): Layer = this + (p,1)
+    def +(p: Point, c: Count) = Layer(m + (p -> (m.getOrElse(p, 0L) + c)))
+  }
+
+  case class LayerGroup(e: EventType, l: Layer)
+
   def apply(json: JsValue): JsValue = layerGroupsToJson(json.events.withPositions.map(toAtomSeq).groupBy(_.e).map(toLayerGroups).toSeq)
 
   def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j),getPoint(j),1L)
@@ -28,17 +39,6 @@ class HeatMap {
   def getEventType(json: JsValue): String = (json \ "eventType").as[String]
 
   def layerGroupsToJson(s: Seq[LayerGroup]): JsValue = Json.toJson(s.sortBy(_.e))
-
-  type Count = Long
-
-  case class Atom(e: EventType, p: Point, c: Count)
-
-  case class Layer(m: Map[Point,Count]) {
-    def +(p: Point): Layer = this + (p,1)
-    def +(p: Point, c: Count) = Layer(m + (p -> (m.getOrElse(p, 0L) + c)))
-  }
-
-  case class LayerGroup(e: EventType, l: Layer)
 
   implicit val statWrites = new Writes[(Point,Count)] {
     override def writes(o: (Point, Count)): JsValue = o match {
