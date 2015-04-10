@@ -2,23 +2,21 @@ package com.crackd.lawlchallenge.actor
 
 import akka.actor.Actor
 import com.crackd.lawlchallenge.actor.AnalysisEngine._
+import com.crackd.lawlchallenge.analysis.aggregate.AnalyzerAggregate
+import play.api.libs.json.JsValue
 
 /**
  * Created by trent ahrens on 4/10/15.
  */
 
 object AnalysisEngine {
-  case object Analyze
-  case object AnalysisComplete
+  case class Analyze(json: JsValue)
 }
 
-class AnalysisEngine extends Actor {
-
-  var counter = 0
+class AnalysisEngine(aggregates: Seq[AnalyzerAggregate]) extends Actor {
+  type AnalyzerName = String
 
   override def receive: Receive = {
-    case Analyze =>
-      counter += 1
-      sender() ! AnalysisComplete
+    case Analyze(json) => aggregates.foreach(_(json))
   }
 }

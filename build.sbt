@@ -31,7 +31,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-testkit" % "2.3.3" % "test",
   "junit" % "junit" % "4.11" % "test",
   "com.natpryce" % "make-it-easy" % "3.1.0" % "test",
-  "org.easymock" % "easymock" % "3.2" % "test",
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
 )
