@@ -1,4 +1,4 @@
-package com.crackd.lawlchallenge.helpers
+package com.crackd.lawlchallenge.helper
 
 import com.crackd.lawlchallenge.gametypes._
 import play.api.libs.json.{JsNull, JsArray, JsValue}

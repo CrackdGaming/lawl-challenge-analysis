@@ -4,7 +4,7 @@ import com.crackd.lawlchallenge.Statistic
 import com.crackd.lawlchallenge.analyser.ChampionKillsAnalysis._
 import com.crackd.lawlchallenge.gameconstants.championKill
 import com.crackd.lawlchallenge.gametypes._
-import com.crackd.lawlchallenge.helpers.GameDataFinders.richGameData
+import com.crackd.lawlchallenge.helper.GameDataFinders.richGameData
 import play.api.libs.json._
 
 /**
@@ -19,7 +19,7 @@ object ChampionKillsAnalysis {
   type Assists = Long
 
   object ChampionKills {
-    def empty = new ChampionKills(Map.empty)
+    val empty = new ChampionKills(Map.empty)
   }
 
   case class ChampionKills(m: Map[(Killer,Victim),(Kills,Assists)]) extends Statistic[ChampionKills] {

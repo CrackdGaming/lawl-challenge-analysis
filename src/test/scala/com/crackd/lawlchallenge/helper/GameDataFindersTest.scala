@@ -1,7 +1,7 @@
-package com.crackd.lawlchallenge.helpers
+package com.crackd.lawlchallenge.helper
 
 import com.crackd.lawlchallenge.gametypes._
-import com.crackd.lawlchallenge.helpers.GameDataFinders._
+import com.crackd.lawlchallenge.helper.GameDataFinders._
 import com.crackd.test.JsonLoader
 import org.scalatest.{FlatSpec, Matchers}
 import play.api.libs.json._

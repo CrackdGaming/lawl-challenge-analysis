@@ -1,14 +1,13 @@
 package com.crackd.lawlchallenge.analyser
 
-import com.crackd.test.JsonLoader
-import org.scalatest.{FlatSpec, Matchers}
+import com.crackd.test.{JsonLoader, UnitSpec}
 import play.api.libs.json.Json
 
 /**
 *  Created by trent ahrens on 4/9/15.
 */
-class HeatMapAnalysisTest extends FlatSpec with Matchers {
-  it should "generate correct json result" in {
+class HeatMapAnalysisTest extends UnitSpec {
+  it should "generate correct result" in {
     val input = JsonLoader.load("/heatmap-input.json")
     val sut = HeatMapAnalysis()
     val actual = Json.toJson(sut(input))

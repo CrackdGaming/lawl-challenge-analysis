@@ -3,7 +3,7 @@ package com.crackd.lawlchallenge.analyser
 import com.crackd.lawlchallenge.Statistic
 import com.crackd.lawlchallenge.analyser.HeatMapAnalysis._
 import com.crackd.lawlchallenge.gametypes._
-import com.crackd.lawlchallenge.helpers.GameDataFinders._
+import com.crackd.lawlchallenge.helper.GameDataFinders._
 import play.api.libs.json._
 
 import scala.language.postfixOps
@@ -17,7 +17,7 @@ object HeatMapAnalysis {
   type Count = Long
 
   object HeatMap {
-    def empty = new HeatMap(Map.empty)
+    val empty = new HeatMap(Map.empty)
   }
 
   case class HeatMap(m: Map[Point,Count]) {
@@ -26,7 +26,7 @@ object HeatMapAnalysis {
   }
 
   object HeatMaps {
-    def empty = new HeatMaps(Map.empty)
+    val empty = new HeatMaps(Map.empty)
   }
 
   case class HeatMaps(m: Map[EventType,HeatMap]) extends Statistic[HeatMaps] {
