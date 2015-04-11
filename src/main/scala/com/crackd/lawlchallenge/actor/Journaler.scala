@@ -3,7 +3,7 @@ package com.crackd.lawlchallenge.actor
 import java.nio.file.Path
 
 import akka.actor.Status.Failure
-import akka.actor.{Props, Actor}
+import akka.actor.{ActorLogging, Props, Actor}
 import akka.pattern.pipe
 import com.crackd.lawlchallenge.abstraction.FileService
 import com.crackd.lawlchallenge.actor.JournalIo.JournalUpdateComplete
@@ -20,7 +20,7 @@ object Journaler {
   case class Journal(p: Path, analysis: JsValue)
 }
 
-class Journaler(fileService: FileService, snapshot: Path, archive: Path) extends Actor {
+class Journaler(fileService: FileService, snapshot: Path, archive: Path) extends Actor with ActorLogging {
   import context._
 
   val io = context.actorOf(Props(classOf[JournalIo], fileService, snapshot, archive))
@@ -47,7 +47,7 @@ object JournalIo {
   case object JournalUpdateComplete
 }
 
-class JournalIo(fileService: FileService, snapshot: Path, archive: Path) extends Actor {
+class JournalIo(fileService: FileService, snapshot: Path, archive: Path) extends Actor with ActorLogging {
   import context._
   override def receive: Actor.Receive = {
     case Journal(p, analysis) =>
@@ -55,6 +55,7 @@ class JournalIo(fileService: FileService, snapshot: Path, archive: Path) extends
         try {
           fileService.writeAllText(snapshot, analysis.toString())
           fileService.move(p, archive.resolve(p.getFileName))
+          log.info("processed file {}", p.toString)
           JournalUpdateComplete
         } catch {
           case e: Throwable => Failure(e)

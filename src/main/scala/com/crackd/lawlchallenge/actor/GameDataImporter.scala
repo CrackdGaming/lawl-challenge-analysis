@@ -2,7 +2,7 @@ package com.crackd.lawlchallenge.actor
 
 import java.nio.file.Path
 
-import akka.actor.{Actor, ActorRef}
+import akka.actor.{ActorLogging, Actor, ActorRef}
 import com.crackd.lawlchallenge.abstraction.FileService
 import com.crackd.lawlchallenge.actor.Bus.GameDataAvailable
 import com.crackd.lawlchallenge.actor.GameDataImporter.FileCreated
@@ -18,10 +18,11 @@ object GameDataImporter {
   case class FileRemoved(p: Path)
 }
 
-class GameDataImporter(fileService: FileService, bus: ActorRef, failedFilesPath: Path) extends Actor {
+class GameDataImporter(fileService: FileService, bus: ActorRef, failedFilesPath: Path) extends Actor with ActorLogging {
   import context._
   override def receive: Receive = {
     case FileCreated(p) =>
+      log.info("file became available for processing {}", p.toString)
       Future {
         try {
           bus ! GameDataAvailable(Json.parse(fileService.readAllText(p)), p)

@@ -10,12 +10,14 @@ import com.crackd.lawlchallenge.analysis.analyzer.{ChampionKillsAnalyzer, HeatMa
 import com.crackd.lawlchallenge.io.GameDataWatcher
 import com.typesafe.config.ConfigFactory
 import org.apache.commons.io.FileUtils
+import org.slf4j.LoggerFactory
 import play.api.libs.json._
 
 /**
 *  Created by trent ahrens on 4/7/15.
 */
 object Main extends App {
+  val log = LoggerFactory.getLogger(getClass)
   val config = ConfigFactory.load()
   val fileSystem = FileSystems.getDefault
   val system = ActorSystem()
@@ -32,6 +34,7 @@ object Main extends App {
   )
 
   if (Files.exists(snapshot)) {
+    log.info("restoring snapshot {}", snapshot.toString)
     val snapshotData = Json.parse(FileUtils.readFileToString(snapshot.toFile))
     aggregates.foreach(a => a.restore(snapshotData \ a.name))
   }
