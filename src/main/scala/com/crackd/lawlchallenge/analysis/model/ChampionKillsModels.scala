@@ -21,14 +21,15 @@ object ChampionKillsModels {
   case class ChampionKills(m: Map[(Killer,Victim),(Kills,Assists)]){
     def +(kr: Killer, v: Victim, ks: Kills, a: Assists) =
       ChampionKills(m + ((kr, v) -> (m.getOrElse((kr, v), (0L, 0L)) match { case (oks, oa) => (oks + ks, oa + a) })))
+    def +(o: ChampionKills): ChampionKills = m.foldRight(o) {
+      case (((kr,v),(ks,a)),ck) => ck + (kr, v, ks, a)
+    }
   }
 
   implicit object ChampionKillsMonoid extends Monoid[ChampionKills] {
     override def zero: ChampionKills = new ChampionKills(Map.empty)
 
-    override def append(f1: ChampionKills, f2: => ChampionKills): ChampionKills = f1.m.foldRight(f2) {
-      case (((kr,v),(ks,a)),ck) => ck + (kr, v, ks, a)
-    }
+    override def append(f1: ChampionKills, f2: => ChampionKills): ChampionKills = f1 + f2
   }
 
   implicit val championKillsPairFormat = new Format[((Killer,Victim),(Kills,Assists))] {

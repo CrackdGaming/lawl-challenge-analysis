@@ -10,10 +10,6 @@ import scala.language.postfixOps
 /**
 *  Created by trent ahrens on 4/9/15.
 */
-object HeatMapAnalyzer {
-  def apply() = new HeatMapAnalyzer()
-}
-
 class HeatMapAnalyzer extends Analyzer[HeatMaps] {
 
   case class Atom(e: EventType, p: Point, c: Count)

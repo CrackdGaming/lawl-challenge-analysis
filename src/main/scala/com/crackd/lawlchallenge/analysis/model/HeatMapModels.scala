@@ -24,12 +24,13 @@ object HeatMapModels {
 
   case class HeatMaps(m: Map[EventType,HeatMap]) {
     def +(e: EventType, hm: HeatMap): HeatMaps = HeatMaps(m + (e -> (m.getOrElse(e, HeatMap.empty) + hm)))
+    def +(o: HeatMaps): HeatMaps = m.foldRight(o) { case ((e,hm),a) => a + (e, hm)}
   }
 
   implicit object HeatMapsMonid extends Monoid[HeatMaps] {
     override def zero: HeatMaps = new HeatMaps(Map.empty)
 
-    override def append(f1: HeatMaps, f2: => HeatMaps): HeatMaps = f1.m.foldRight(f2) { case ((e,hm),a) => a + (e, hm)}
+    override def append(f1: HeatMaps, f2: => HeatMaps): HeatMaps = f1 + f2
   }
 
   implicit val heatMapPairFormat = new Format[(Point,Count)] {

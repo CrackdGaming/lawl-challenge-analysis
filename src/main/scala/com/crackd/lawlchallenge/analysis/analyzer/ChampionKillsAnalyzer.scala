@@ -9,10 +9,6 @@ import play.api.libs.json._
 /**
 *  Created by trent ahrens on 4/9/15.
 */
-object ChampionKillsAnalyzer {
-  def apply() = new ChampionKillsAnalyzer()
-}
-
 class ChampionKillsAnalyzer extends Analyzer[ChampionKills] {
   def apply(json: JsValue): ChampionKills = ChampionKillsMonoid.append(kills(json)(events(json)), assists(json)(events(json)))
 

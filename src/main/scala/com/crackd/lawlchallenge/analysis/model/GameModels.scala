@@ -8,12 +8,15 @@ import scalaz.Monoid
  * Created by trent ahrens on 4/10/15.
  */
 object GameModels {
-  case class Game(totalGames: Int)
+  case class Game(numGames: Long, numMinutesPlayed: Long) {
+    val averageGameDuration = numMinutesPlayed / numGames
+    def +(o: Game) = Game(o.numGames + numGames, o.numMinutesPlayed + numMinutesPlayed)
+  }
 
   implicit object GameMonoid extends Monoid[Game] {
-    override def zero: Game = new Game(0)
+    override def zero: Game = new Game(0L, 0L)
 
-    override def append(f1: Game, f2: => Game): Game = Game(f1.totalGames + f2.totalGames)
+    override def append(f1: Game, f2: => Game): Game = f1 + f2
   }
 
   implicit val gameFormatter = Json.format[Game]

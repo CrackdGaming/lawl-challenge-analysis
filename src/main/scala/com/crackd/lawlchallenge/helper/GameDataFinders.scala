@@ -24,11 +24,13 @@ class Events(s: Seq[JsValue]) extends Seq[JsValue] {
 object GameDataFinders {
   class RichGameData(json: JsValue) {
     def championIdForParticipantId(id: ParticipantId): ChampionId =
-      (json \ "participants").as[JsArray].value.find(v => (v \ "participantId")
+      participants.value.find(v => (v \ "participantId")
         .as[Int] == id).map(j => (j \ "championId").as[Int]).getOrElse(0)
 
     def events: Events = new Events((json \ "timeline" \ "frames" \\ "events")
       .filter(_ != JsNull).asInstanceOf[Seq[JsArray]].flatMap(_.value))
+
+    def participants = (json \ "participants").as[JsArray]
   }
 
   implicit def richGameData(json: JsValue): RichGameData = new RichGameData(json)

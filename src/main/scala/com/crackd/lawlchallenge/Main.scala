@@ -6,7 +6,7 @@ import akka.actor.{Props, ActorSystem}
 import com.crackd.lawlchallenge.abstraction.DefaultFileService
 import com.crackd.lawlchallenge.actor.{GameDataImporter, Bus, Journaler, AnalysisEngine}
 import com.crackd.lawlchallenge.analysis.aggregate.DefaultAnalyzerAggregate
-import com.crackd.lawlchallenge.analysis.analyzer.{ChampionKillsAnalyzer, HeatMapAnalyzer, GameAnalyzer}
+import com.crackd.lawlchallenge.analysis.analyzer.{ParticipantAnalyzer, ChampionKillsAnalyzer, HeatMapAnalyzer, GameAnalyzer}
 import com.crackd.lawlchallenge.io.GameDataWatcher
 import com.typesafe.config.ConfigFactory
 import org.apache.commons.io.FileUtils
@@ -30,7 +30,8 @@ object Main extends App {
   val aggregates = Vector(
     new DefaultAnalyzerAggregate(new GameAnalyzer, "game"),
     new DefaultAnalyzerAggregate(new HeatMapAnalyzer, "heatmap"),
-    new DefaultAnalyzerAggregate(new ChampionKillsAnalyzer, "championkills")
+    new DefaultAnalyzerAggregate(new ChampionKillsAnalyzer, "championkills"),
+    new DefaultAnalyzerAggregate(new ParticipantAnalyzer, "participant")
   )
 
   if (Files.exists(snapshot)) {

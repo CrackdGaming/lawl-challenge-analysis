@@ -10,7 +10,7 @@ import play.api.libs.json.Json
 class HeatMapAnalyzerTest extends UnitSpec {
   it should "generate correct result" in {
     val input = JsonLoader.load("/heatmap-input.json")
-    val sut = HeatMapAnalyzer()
+    val sut = new HeatMapAnalyzer()
     val actual = Json.toJson(sut(input))
     val expected = JsonLoader.load("/heatmap-output.json")
     actual shouldBe expected
@@ -18,7 +18,7 @@ class HeatMapAnalyzerTest extends UnitSpec {
 
   it should "skip event types with no position" in {
     val input = JsonLoader.load("/heatmap-input-noposition.json")
-    val sut = HeatMapAnalyzer()
+    val sut = new HeatMapAnalyzer()
     val actual = Json.toJson(sut(input))
     val expected = Json.toJson(List.empty[String])
     actual shouldBe expected

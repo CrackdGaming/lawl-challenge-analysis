@@ -9,10 +9,10 @@ import com.crackd.test.{JsonLoader, UnitSpec}
  */
 class GameAnalyzerTest extends UnitSpec {
   it should "generate correct result" in {
-    val input = JsonLoader.load("/championdeaths-input.json")
-    val sut = GameAnalyzer()
+    val input = JsonLoader.load("/game-input.json")
+    val sut = new GameAnalyzer()
     val actual = sut(input)
-    val expected = Game(1)
+    val expected = Game(1, 1431)
     actual shouldBe expected
   }
 }
