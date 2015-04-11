@@ -10,15 +10,13 @@ import scalaz.Monoid
  * Created by trent ahrens on 4/11/15.
  */
 
-object ParticipantModels {
-  case class Participant(totalChampLevels: Long,
-                         mostAssists: Long, totalAssists: Long,
+object StatModels {
+  case class Stats(totalChampLevels: Long,
                          mostTimeCrowdControlDealt: Long, totalTimeCrowdControlDealt: Long,
                          gold: Gold, kills: Kills, damage: Damage) {
-    def +(o: Participant): Participant =
-      Participant(
+    def +(o: Stats): Stats =
+      Stats(
         o.totalChampLevels + totalChampLevels,
-        max(o.mostAssists, mostAssists), o.totalAssists + totalAssists,
         max(o.mostTimeCrowdControlDealt, mostTimeCrowdControlDealt), o.totalTimeCrowdControlDealt + totalTimeCrowdControlDealt,
         o.gold + gold, o.kills + kills, o.damage + damage)
   }
@@ -32,6 +30,7 @@ object ParticipantModels {
 
   case class Kills(mostDeaths: Long, totalDeaths: Long,
                    mostKills: Long, totalKills: Long,
+                   mostAssists: Long, totalAssists: Long,
                    mostDoubleKills: Long, totalDoubleKills: Long,
                    mostInhibitorKills: Long, totalInhibitorKills: Long,
                    mostKillingSprees: Long, totalKillingSprees: Long,
@@ -44,6 +43,7 @@ object ParticipantModels {
       Kills(
         max(o.mostDeaths, mostDeaths), o.totalDeaths + totalDeaths,
         max(o.mostKills, mostKills), o.totalKills + totalKills,
+        max(o.mostAssists, mostAssists), o.totalAssists + totalAssists,
         max(o.mostDoubleKills, mostDoubleKills), o.totalDoubleKills + totalDoubleKills,
         max(o.mostInhibitorKills, mostInhibitorKills), o.totalInhibitorKills + totalInhibitorKills,
         max(o.mostKillingSprees, mostKillingSprees), o.totalKillingSprees + totalKillingSprees,
@@ -95,17 +95,17 @@ object ParticipantModels {
         max(o.mostUnitsHealed, mostUnitsHealed), o.totalUnitsHealed + totalUnitsHealed)
   }
   
-  implicit object ParticipantMonoid extends Monoid[Participant] {
-    override def zero: Participant = Participant(
-      0L, 0L, 0L, 0L, 0L,
+  implicit object StatsMonoid extends Monoid[Stats] {
+    override def zero: Stats = Stats(
+      0L, 0L, 0L,
       Gold(0L, 0L, 0L, 0L),
-      Kills(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L),
+      Kills(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L),
       Damage(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L,
         Magic(0L, 0L, 0L, 0L, 0L, 0L),
         Physical(0L, 0L, 0L, 0L, 0L, 0L),
         Heal(0L, 0L, 0L, 0L)))
 
-    override def append(f1: Participant, f2: => Participant): Participant = f1 + f2
+    override def append(f1: Stats, f2: => Stats): Stats = f1 + f2
   }
 
   implicit val healFormat = Json.format[Heal]
@@ -120,5 +120,5 @@ object ParticipantModels {
 
   implicit val goldFormat = Json.format[Gold]
 
-  implicit val participantFormat = Json.format[Participant]
+  implicit val statFormat = Json.format[Stats]
 }

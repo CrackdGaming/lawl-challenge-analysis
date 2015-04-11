@@ -1,7 +1,5 @@
 {
   "totalChampLevels": 37,
-  "mostAssists": 9,
-  "totalAssists": 16,
   "mostTimeCrowdControlDealt": 335,
   "totalTimeCrowdControlDealt": 433,
   "gold": {
@@ -15,6 +13,8 @@
     "totalDeaths": 25,
     "mostKills": 10,
     "totalKills": 17,
+    "mostAssists": 9,
+    "totalAssists": 16,
     "mostDoubleKills": 2,
     "totalDoubleKills": 3,
     "mostInhibitorKills": 1,

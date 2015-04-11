@@ -1,0 +1,148 @@
+[
+  {
+    "championId": 35,
+    "data": {
+      "timesPicked": 1,
+      "stat": {
+        "totalChampLevels": 18,
+        "mostTimeCrowdControlDealt": 335,
+        "totalTimeCrowdControlDealt": 335,
+        "gold": {
+          "mostGoldAccumulated": 12693,
+          "totalGoldAccumulated": 12693,
+          "mostGoldSpent": 11450,
+          "totalGoldSpent": 11450
+        },
+        "kills": {
+          "mostDeaths": 10,
+          "totalDeaths": 10,
+          "mostKills": 10,
+          "totalKills": 10,
+          "mostAssists": 7,
+          "totalAssists": 7,
+          "mostDoubleKills": 2,
+          "totalDoubleKills": 2,
+          "mostInhibitorKills": 1,
+          "totalInhibitorKills": 1,
+          "mostKillingSprees": 1,
+          "totalKillingSprees": 1,
+          "mostKillingSpree": 5,
+          "totalKillingSpree": 5,
+          "mostMultiKill": 2,
+          "totalMultiKills": 2,
+          "mostMinionsKilled": 34,
+          "totalMinionsKilled": 34,
+          "mostTowerKills": 0,
+          "totalTowerKills": 0,
+          "mostTripleKills": 0,
+          "totalTripleKills": 0
+        },
+        "damage": {
+          "mostCriticalStrikeDamage": 347,
+          "totalCriticalStrikeDamage": 347,
+          "mostDamageDealt": 57899,
+          "totalDamageDealt": 57899,
+          "mostDamageDealtToChampions": 23036,
+          "totalDamageDealtToChampions": 23036,
+          "mostDamageTaken": 28988,
+          "totalDamageTaken": 28988,
+          "magic": {
+            "mostMagicDamageDealt": 51730,
+            "totalMagicDamageDealt": 51730,
+            "mostMagicDamageDealtToChampions": 21818,
+            "totalMagicDamageDealtToChampions": 21818,
+            "mostMagicDamageTaken": 18204,
+            "totalMagicDamageTaken": 18204
+          },
+          "physical": {
+            "mostPhysicalDamageDealt": 6168,
+            "totalPhysicalDamageDealt": 6168,
+            "mostPhysicalDamageDealtToChampions": 1218,
+            "totalPhysicalDamageDealtToChampions": 1218,
+            "mostphysicalDamageTaken": 9920,
+            "totalphysicalDamageTaken": 9920
+          },
+          "heal": {
+            "mostHealing": 2307,
+            "totalHealing": 2307,
+            "mostUnitsHealed": 1,
+            "totalUnitsHealed": 1
+          }
+        }
+      }
+    }
+  },
+  {
+    "championId": 81,
+    "data": {
+      "timesPicked": 2,
+      "stat": {
+        "totalChampLevels": 38,
+        "mostTimeCrowdControlDealt": 98,
+        "totalTimeCrowdControlDealt": 196,
+        "gold": {
+          "mostGoldAccumulated": 13923,
+          "totalGoldAccumulated": 27846,
+          "mostGoldSpent": 13273,
+          "totalGoldSpent": 26546
+        },
+        "kills": {
+          "mostDeaths": 15,
+          "totalDeaths": 30,
+          "mostKills": 7,
+          "totalKills": 14,
+          "mostAssists": 9,
+          "totalAssists": 18,
+          "mostDoubleKills": 1,
+          "totalDoubleKills": 2,
+          "mostInhibitorKills": 0,
+          "totalInhibitorKills": 0,
+          "mostKillingSprees": 1,
+          "totalKillingSprees": 2,
+          "mostKillingSpree": 3,
+          "totalKillingSpree": 6,
+          "mostMultiKill": 2,
+          "totalMultiKills": 4,
+          "mostMinionsKilled": 97,
+          "totalMinionsKilled": 194,
+          "mostTowerKills": 4,
+          "totalTowerKills": 8,
+          "mostTripleKills": 0,
+          "totalTripleKills": 0
+        },
+        "damage": {
+          "mostCriticalStrikeDamage": 669,
+          "totalCriticalStrikeDamage": 1338,
+          "mostDamageDealt": 103191,
+          "totalDamageDealt": 206382,
+          "mostDamageDealtToChampions": 22148,
+          "totalDamageDealtToChampions": 44296,
+          "mostDamageTaken": 32924,
+          "totalDamageTaken": 65848,
+          "magic": {
+            "mostMagicDamageDealt": 45997,
+            "totalMagicDamageDealt": 91994,
+            "mostMagicDamageDealtToChampions": 6082,
+            "totalMagicDamageDealtToChampions": 12164,
+            "mostMagicDamageTaken": 25249,
+            "totalMagicDamageTaken": 50498
+          },
+          "physical": {
+            "mostPhysicalDamageDealt": 56651,
+            "totalPhysicalDamageDealt": 113302,
+            "mostPhysicalDamageDealtToChampions": 15803,
+            "totalPhysicalDamageDealtToChampions": 31606,
+            "mostphysicalDamageTaken": 7490,
+            "totalphysicalDamageTaken": 14980
+          },
+          "heal": {
+            "mostHealing": 2263,
+            "totalHealing": 4526,
+            "mostUnitsHealed": 1,
+            "totalUnitsHealed": 2
+          }
+        }
+      }
+    }
+  }
+]

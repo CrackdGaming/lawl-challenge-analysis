@@ -30,7 +30,7 @@ object GameDataFinders {
     def events: Events = new Events((json \ "timeline" \ "frames" \\ "events")
       .filter(_ != JsNull).asInstanceOf[Seq[JsArray]].flatMap(_.value))
 
-    def participants = (json \ "participants").as[JsArray]
+    def participants: JsArray = (json \ "participants").as[JsArray]
   }
 
   implicit def richGameData(json: JsValue): RichGameData = new RichGameData(json)
