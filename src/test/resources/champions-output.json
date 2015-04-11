@@ -2,6 +2,7 @@
   {
     "championId": 35,
     "data": {
+      "totalWins": 0,
       "timesPicked": 1,
       "stat": {
         "totalChampLevels": 18,
@@ -75,6 +76,7 @@
   {
     "championId": 81,
     "data": {
+      "totalWins": 2,
       "timesPicked": 2,
       "stat": {
         "totalChampLevels": 38,

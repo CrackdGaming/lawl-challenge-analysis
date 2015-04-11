@@ -3,6 +3,7 @@
     {
       "championId": 81,
       "participantId": 1,
+      "teamId": 100,
       "stats": {
         "assists": 9,
         "champLevel": 19,
@@ -36,6 +37,7 @@
     {
       "championId": 81,
       "participantId": 2,
+      "teamId": 100,
       "stats": {
         "assists": 9,
         "champLevel": 19,
@@ -69,6 +71,7 @@
     {
       "championId": 35,
       "participantId": 3,
+      "teamId": 1,
       "stats": {
         "assists": 7,
         "champLevel": 18,
@@ -98,6 +101,16 @@
         "towerKills": 0,
         "tripleKills": 0
       }
+    }
+  ],
+  "teams": [
+    {
+      "teamId": 100,
+      "winner": true
+    },
+    {
+      "teamId": 200,
+      "winner": false
     }
   ]
 }

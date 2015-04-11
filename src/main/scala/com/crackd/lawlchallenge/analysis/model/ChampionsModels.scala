@@ -12,12 +12,12 @@ import scalaz.Monoid
  */
 object ChampionsModels {
   case class Champions(m: Map[ChampionId,Champion]) {
-    def +(id: ChampionId, c: Champion): Champions = Champions(m + (id -> (m.getOrElse(id, Champion(0, StatsMonoid.zero)) + c)))
+    def +(id: ChampionId, c: Champion): Champions = Champions(m + (id -> (m.getOrElse(id, Champion(0, 0, StatsMonoid.zero)) + c)))
     def +(o: Champions): Champions = m.foldRight(o) { case ((id, c), a) => a + (id,c) }
   }
 
-  case class Champion(timesPicked: Long, stat: Stats) {
-    def +(o: Champion): Champion = Champion(o.timesPicked + timesPicked, o.stat + stat)
+  case class Champion(totalWins: Long, timesPicked: Long, stat: Stats) {
+    def +(o: Champion): Champion = Champion(o.totalWins + totalWins, o.timesPicked + timesPicked, o.stat + stat)
   }
 
   implicit object ChampionsMonoid extends Monoid[Champions] {

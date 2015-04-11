@@ -6,6 +6,7 @@ package com.crackd.lawlchallenge
 package object gametypes {
   type ParticipantId = Int
   type ChampionId = Int
+  type TeamId = Int
   type EventType = String
 
   case class Point(x: Int, y: Int)

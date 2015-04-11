@@ -1,7 +1,7 @@
 package com.crackd.lawlchallenge.helper
 
 import com.crackd.lawlchallenge.gametypes._
-import play.api.libs.json.{JsNull, JsArray, JsValue}
+import play.api.libs.json.{JsObject, JsNull, JsArray, JsValue}
 
 import scala.language.implicitConversions
 
@@ -24,8 +24,17 @@ class Events(s: Seq[JsValue]) extends Seq[JsValue] {
 object GameDataFinders {
   class RichGameData(json: JsValue) {
     def championIdForParticipantId(id: ParticipantId): ChampionId =
-      participants.value.find(v => (v \ "participantId")
-        .as[Int] == id).map(j => (j \ "championId").as[Int]).getOrElse(0)
+      participantById(id)
+        .map(j => (j \ "championId").as[Int])
+        .getOrElse(0)
+
+    def participantTeamId(id: ParticipantId): TeamId =
+      participantById(id)
+        .map(j => (j \ "teamId").as[Int])
+        .getOrElse(0)
+
+    def participantById(id: ParticipantId): Option[JsObject] =
+      participants.value.find(v => (v \ "participantId").as[Int] == id).map(_.as[JsObject])
 
     def events: Events = new Events((json \ "timeline" \ "frames" \\ "events")
       .filter(_ != JsNull).asInstanceOf[Seq[JsArray]].flatMap(_.value))
