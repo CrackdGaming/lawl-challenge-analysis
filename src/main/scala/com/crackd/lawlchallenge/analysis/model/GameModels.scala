@@ -9,7 +9,6 @@ import scalaz.Monoid
  */
 object GameModels {
   case class Game(numGames: Long, numMinutesPlayed: Long) {
-    val averageGameDuration = numMinutesPlayed / numGames
     def +(o: Game) = Game(o.numGames + numGames, o.numMinutesPlayed + numMinutesPlayed)
   }
 

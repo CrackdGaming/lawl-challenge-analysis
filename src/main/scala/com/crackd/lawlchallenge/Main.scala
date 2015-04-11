@@ -6,7 +6,7 @@ import akka.actor.{Props, ActorSystem}
 import com.crackd.lawlchallenge.abstraction.DefaultFileService
 import com.crackd.lawlchallenge.actor.{GameDataImporter, Bus, Journaler, AnalysisEngine}
 import com.crackd.lawlchallenge.analysis.aggregate.DefaultAnalyzerAggregate
-import com.crackd.lawlchallenge.analysis.analyzer.{ParticipantAnalyzer, ChampionKillsAnalyzer, HeatMapAnalyzer, GameAnalyzer}
+import com.crackd.lawlchallenge.analysis.analyzer._
 import com.crackd.lawlchallenge.io.GameDataWatcher
 import com.typesafe.config.ConfigFactory
 import org.apache.commons.io.FileUtils
@@ -31,7 +31,8 @@ object Main extends App {
     new DefaultAnalyzerAggregate(new GameAnalyzer, "game"),
     new DefaultAnalyzerAggregate(new HeatMapAnalyzer, "heatmap"),
     new DefaultAnalyzerAggregate(new ChampionKillsAnalyzer, "championkills"),
-    new DefaultAnalyzerAggregate(new ParticipantAnalyzer, "participant")
+    new DefaultAnalyzerAggregate(new ParticipantAnalyzer, "participant"),
+    new DefaultAnalyzerAggregate(new ChampionsAnalyzer, "champions")
   )
 
   if (Files.exists(snapshot)) {

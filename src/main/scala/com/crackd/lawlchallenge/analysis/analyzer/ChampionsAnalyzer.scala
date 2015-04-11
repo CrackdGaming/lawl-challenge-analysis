@@ -8,7 +8,7 @@ import play.api.libs.json.{JsValue, Json}
 /**
  * Created by trent ahrens on 4/11/15.
  */
-class ChampionAnalyzer extends Analyzer[Champions] {
+class ChampionsAnalyzer extends Analyzer[Champions] {
   override def apply(json: JsValue): Champions =
     json.participants.value
       .map(j => ((j \ "participantId").as[Int], (j \ "championId").as[Int]))
