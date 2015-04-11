@@ -7,6 +7,7 @@ import java.nio.file.Path
   */
 trait FileService {
   def readAllText(p: Path): String
+  def writeAllText(p: Path, data: String): Unit
   def delete(p: Path): Unit
-  def move(source: Path, target: Path)
+  def move(source: Path, target: Path): Unit
 }

@@ -19,7 +19,7 @@ object HeatMapModels {
 
   case class HeatMap(m: Map[Point,Count]) {
     def +(p: Point, c: Count): HeatMap = HeatMap(m + (p -> (m.getOrElse(p, 0L) + c)))
-    def +(hm: HeatMap): HeatMap = m.foldRight(hm) { case ((p,c),`hm`) => hm + (p,c) }
+    def +(hm: HeatMap): HeatMap = m.foldRight(hm) { case ((p,c),a) => a + (p,c) }
   }
 
   case class HeatMaps(m: Map[EventType,HeatMap]) {
@@ -29,7 +29,7 @@ object HeatMapModels {
   implicit object HeatMapsMonid extends Monoid[HeatMaps] {
     override def zero: HeatMaps = new HeatMaps(Map.empty)
 
-    override def append(f1: HeatMaps, f2: => HeatMaps): HeatMaps = f1.m.foldRight(f2) { case ((e,hm),_) => f2 + (e, hm)}
+    override def append(f1: HeatMaps, f2: => HeatMaps): HeatMaps = f1.m.foldRight(f2) { case ((e,hm),a) => a + (e, hm)}
   }
 
   implicit val heatMapPairFormat = new Format[(Point,Count)] {

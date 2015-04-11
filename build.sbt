@@ -26,7 +26,6 @@ libraryDependencies ++= Seq(
   "javax.servlet" % "servlet-api" % "2.5",
   "org.eclipse.jetty" % "jetty-servlet" % "7.6.0.v20120127",
   "me.lessis" %% "retry" % "0.2.0",
-  "javax.resource" % "connector-api" % "1.5",
   "org.hamcrest" % "hamcrest-all" % "1.3" % "test",
   "com.typesafe.akka" %% "akka-testkit" % "2.3.3" % "test",
   "junit" % "junit" % "4.11" % "test",
@@ -34,7 +33,5 @@ libraryDependencies ++= Seq(
   "org.scalatest" %% "scalatest" % "2.2.1" % "test",
   "org.scalamock" %% "scalamock-scalatest-support" % "3.2" % "test"
 )
-
-unmanagedJars in Compile += file("lib/XADisk.jar")
 
 bashScriptConfigLocation := Some("${app_home}/../conf/jvmopts")

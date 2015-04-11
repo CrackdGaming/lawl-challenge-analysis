@@ -15,6 +15,7 @@ object HeatMapAnalyzer {
 }
 
 class HeatMapAnalyzer extends Analyzer[HeatMaps] {
+
   case class Atom(e: EventType, p: Point, c: Count)
 
   def apply(json: JsValue): HeatMaps =
@@ -24,7 +25,7 @@ class HeatMapAnalyzer extends Analyzer[HeatMaps] {
       case ((e, s), hms) => hms +(e, s.foldRight(HeatMap.empty)((a, hm) => hm +(a.p, a.c)))
     }
 
-  def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j),getPoint(j),1L)
+  def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j), getPoint(j), 1L)
 
   def getPoint(json: JsValue): Point = Point((json \ "position" \ "x").as[Int], (json \ "position" \ "y").as[Int])
 

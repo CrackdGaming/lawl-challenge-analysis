@@ -17,9 +17,19 @@ class GameDataFindersTest extends FlatSpec with Matchers {
     json.championIdForParticipantId(3) shouldBe 83
   }
 
+  "when it cannot find a champion id it" should "return 0" in{
+    val json = JsonLoader.load("/championIdForParticipantId.json")
+    json.championIdForParticipantId(0) shouldBe 0
+    json.championIdForParticipantId(11) shouldBe 0
+  }
+
   "events" should "return a list of all events" in {
     val json = JsonLoader.load("/events.json")
     json.events shouldBe List(makeEvent("EVENT_A"), makeEvent("EVENT_B"), makeEvent("EVENT_C", Some(Point(100,100))), makeEvent("EVENT_B"))
+  }
+
+  "events" should "not fail on null events" in {
+    JsonLoader.load("/eventsWithNull.json").events
   }
 
   "eventsWithPositions" should "return a list of all events with position information" in {

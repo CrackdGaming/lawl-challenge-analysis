@@ -8,8 +8,10 @@ import scalaz.Monoid
 /**
  * Created by trent ahrens on 4/10/15.
  */
-class DefaultAnalyzerAggregate[T: Format](a: Analyzer[T])(implicit m: Monoid[T]) extends AnalyzerAggregate{
+class DefaultAnalyzerAggregate[T: Format](a: Analyzer[T], aggregateName: String = getClass.getCanonicalName)(implicit m: Monoid[T]) extends AnalyzerAggregate{
   var aggregate: T = m.zero
+
+  override def name: String = aggregateName
 
   override def apply(json: JsValue): Unit = aggregate = m.append(a(json), aggregate)
 

@@ -23,7 +23,7 @@ class GameDataImporterTest extends AkkaUnitSpec {
 
     sut ! FileCreated(path)
 
-    expectMsg(GameDataAvailable(JsNull))
+    expectMsg(GameDataAvailable(JsNull,path))
   }
 
   "when parsing failed it" must "delete the file" in {

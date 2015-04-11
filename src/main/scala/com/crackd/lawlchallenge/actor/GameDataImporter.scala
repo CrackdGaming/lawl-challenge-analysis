@@ -24,7 +24,7 @@ class GameDataImporter(fileService: FileService, bus: ActorRef, failedFilesPath:
     case FileCreated(p) =>
       Future {
         try {
-          bus ! GameDataAvailable(Json.parse(fileService.readAllText(p)))
+          bus ! GameDataAvailable(Json.parse(fileService.readAllText(p)), p)
         } catch {
           case _: Throwable => fileService.move(p, failedFilesPath.resolve(p.getFileName))
         }
