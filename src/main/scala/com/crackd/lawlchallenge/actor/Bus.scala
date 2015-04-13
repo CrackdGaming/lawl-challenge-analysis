@@ -3,7 +3,7 @@ package com.crackd.lawlchallenge.actor
 import java.nio.file.Path
 
 import akka.actor.{Actor, ActorRef}
-import com.crackd.lawlchallenge.actor.AnalysisEngine.{AnalysisComplete, Analyze}
+import com.crackd.lawlchallenge.actor.AnalysisEngine.{Analysis, Analyze}
 import com.crackd.lawlchallenge.actor.Bus._
 import com.crackd.lawlchallenge.actor.Journaler.Journal
 import play.api.libs.json.JsValue
@@ -31,7 +31,7 @@ class Bus(analysisEngine: ActorRef, journaler: ActorRef) extends Actor {
   }
   
   def waitingForAnalysis(p: Path): Receive = {
-    case AnalysisComplete(json) =>
+    case Analysis(json) =>
       journaler ! Journal(p, json)
       if (queue.nonEmpty) {
         val e = queue.dequeue()

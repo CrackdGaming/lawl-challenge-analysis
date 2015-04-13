@@ -1,7 +1,7 @@
 package com.crackd.lawlchallenge.actor
 
 import akka.testkit.TestActorRef
-import com.crackd.lawlchallenge.actor.AnalysisEngine.{AnalysisComplete, Analyze}
+import com.crackd.lawlchallenge.actor.AnalysisEngine.{Analysis, Analyze}
 import com.crackd.lawlchallenge.analysis.aggregate.AnalyzerAggregate
 import com.crackd.test.AkkaUnitSpec
 import play.api.libs.json._
@@ -27,6 +27,6 @@ class AnalysisEngineTest extends AkkaUnitSpec {
       "aggregate1" -> JsNull,
       "aggregate2" -> JsNull
     )
-    expectMsg(AnalysisComplete(expected))
+    expectMsg(Analysis(expected))
   }
 }

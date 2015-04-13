@@ -11,13 +11,17 @@ import play.api.libs.json.{Json, JsValue}
 
 object AnalysisEngine {
   case class Analyze(json: JsValue)
-  case class AnalysisComplete(json: JsValue)
+  case class Analysis(json: JsValue)
+  case object GetAnalysis
 }
 
 class AnalysisEngine(aggregates: Seq[AnalyzerAggregate]) extends Actor {
   override def receive: Receive = {
     case Analyze(json) =>
       aggregates.foreach(_(json))
-      sender ! AnalysisComplete(Json.toJson(aggregates.map(a => (a.name,a.capture)).toMap))
+      sender ! Analysis(Json.toJson(getAnalysis))
+    case GetAnalysis => sender() ! Analysis(getAnalysis)
   }
+
+  def getAnalysis = Json.toJson(aggregates.map(a => (a.name,a.capture)).toMap)
 }

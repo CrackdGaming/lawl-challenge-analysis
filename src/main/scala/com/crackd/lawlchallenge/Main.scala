@@ -3,6 +3,9 @@ package com.crackd.lawlchallenge
 import java.nio.file.{Files, FileSystems}
 
 import akka.actor.{Props, ActorSystem}
+import akka.io.IO
+import akka.pattern._
+import akka.util.Timeout
 import com.crackd.lawlchallenge.abstraction.DefaultFileService
 import com.crackd.lawlchallenge.actor.{GameDataImporter, Bus, Journaler, AnalysisEngine}
 import com.crackd.lawlchallenge.analysis.aggregate.DefaultAnalyzerAggregate
@@ -12,15 +15,21 @@ import com.typesafe.config.ConfigFactory
 import org.apache.commons.io.FileUtils
 import org.slf4j.LoggerFactory
 import play.api.libs.json._
+import spray.can.Http
+
+import scala.concurrent.duration.DurationInt
+import scala.language.postfixOps
 
 /**
 *  Created by trent ahrens on 4/7/15.
 */
 object Main extends App {
+  implicit val system = ActorSystem()
+  implicit val timeout = Timeout(6 seconds)
+
   val log = LoggerFactory.getLogger(getClass)
   val config = ConfigFactory.load()
   val fileSystem = FileSystems.getDefault
-  val system = ActorSystem()
   val fileService = new DefaultFileService
   val snapshot = fileSystem.getPath(config.getString("folders.snapshot"))
   val archive = fileSystem.getPath(config.getString("folders.archive"))
@@ -47,4 +56,7 @@ object Main extends App {
   val importer = system.actorOf(Props(classOf[GameDataImporter], fileService, bus, failedImports))
   val fileWatcher = new GameDataWatcher(imports, importer)
   fileWatcher.start()
+
+  val apiService = system.actorOf(Props(classOf[RestApi], analysisEngine))
+  IO(Http) ? Http.Bind(apiService, interface = "::0", port = Integer.valueOf(Option(System.getenv("PORT")).getOrElse("6437")))
 }
