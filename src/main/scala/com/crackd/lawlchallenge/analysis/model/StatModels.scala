@@ -120,5 +120,5 @@ object StatModels {
 
   implicit val goldFormat = Json.format[Gold]
 
-  implicit val statFormat = Json.format[Stats]
+  implicit val statsFormat = Json.format[Stats]
 }

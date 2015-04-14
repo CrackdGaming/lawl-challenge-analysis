@@ -17,7 +17,7 @@ import scala.concurrent.Future
  * Created by trent ahrens on 4/10/15.
  */
 object Journaler {
-  case class Journal(p: Path, analysis: JsValue)
+  case class Journal(paths: Seq[Path], analysis: JsValue)
 }
 
 class Journaler(fileService: FileService, snapshot: Path, archive: Path) extends Actor with ActorLogging {
@@ -50,12 +50,14 @@ object JournalIo {
 class JournalIo(fileService: FileService, snapshot: Path, archive: Path) extends Actor with ActorLogging {
   import context._
   override def receive: Actor.Receive = {
-    case Journal(p, analysis) =>
+    case Journal(paths, analysis) =>
       Future {
         try {
           fileService.writeAllText(snapshot, analysis.toString())
-          fileService.move(p, archive.resolve(p.getFileName))
-          log.info("processed file {}", p.toString)
+          paths.foreach(p => {
+            fileService.move(p, archive.resolve(p.getFileName))
+            log.info("journaling file {}", p.toString)
+          })
           JournalUpdateComplete
         } catch {
           case e: Throwable => Failure(e)

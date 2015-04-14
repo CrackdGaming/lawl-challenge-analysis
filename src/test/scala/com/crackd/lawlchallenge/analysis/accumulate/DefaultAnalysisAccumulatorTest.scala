@@ -1,4 +1,4 @@
-package com.crackd.lawlchallenge.analysis.aggregate
+package com.crackd.lawlchallenge.analysis.accumulate
 
 import com.crackd.lawlchallenge.analysis.analyzer.Analyzer
 import com.crackd.test.UnitSpec
@@ -9,7 +9,7 @@ import scalaz.Monoid
 /**
  * Created by trent ahrens on 4/10/15.
  */
-class DefaultAnalyzerAggregateTest extends UnitSpec {
+class DefaultAnalysisAccumulatorTest extends UnitSpec {
 
   case class Atom(size: Int)
 
@@ -25,7 +25,7 @@ class DefaultAnalyzerAggregateTest extends UnitSpec {
     override def apply(json: JsValue): Atom = Atom(1)
   }
 
-  val sut = new DefaultAnalyzerAggregate(new AtomAnalyzer)
+  val sut = new DefaultAnalysisAccumulator(new AtomAnalyzer)
 
   it should "start off with an aggregate identity" in {
     sut.aggregate shouldBe AtomMonoid.zero

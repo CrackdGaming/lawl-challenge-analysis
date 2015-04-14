@@ -18,5 +18,5 @@ object GameModels {
     override def append(f1: Game, f2: => Game): Game = f1 + f2
   }
 
-  implicit val gameFormatter = Json.format[Game]
+  implicit val gameFormat = Json.format[Game]
 }

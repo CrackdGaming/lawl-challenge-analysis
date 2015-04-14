@@ -2,13 +2,12 @@ package com.crackd.lawlchallenge.actor
 
 import java.nio.file.Path
 
-import akka.actor.{ActorLogging, Actor, ActorRef}
-import com.crackd.lawlchallenge.abstraction.FileService
+import akka.actor.{Actor, ActorLogging, ActorRef}
 import com.crackd.lawlchallenge.actor.Bus.GameDataAvailable
-import com.crackd.lawlchallenge.actor.GameDataImporter.FileCreated
-import play.api.libs.json._
+import com.crackd.lawlchallenge.actor.CommonMessages._
+import com.crackd.lawlchallenge.actor.GameDataImporter._
 
-import scala.concurrent.Future
+import scala.collection.mutable
 
 /**
  * Created by trent ahrens on 4/10/15.
@@ -16,19 +15,34 @@ import scala.concurrent.Future
 object GameDataImporter {
   case class FileCreated(p: Path)
   case class FileRemoved(p: Path)
+
+  private case object Dequeue
 }
 
-class GameDataImporter(fileService: FileService, bus: ActorRef, failedFilesPath: Path) extends Actor with ActorLogging {
+class GameDataImporter(bus: ActorRef) extends Actor with ActorLogging {
   import context._
-  override def receive: Receive = {
+
+  val queue: mutable.Queue[Path] = mutable.Queue.empty
+
+  override def receive: Receive = running orElse default
+
+  def running: Receive = {
+    case Suspend =>
+      log.info("suspending importer")
+      become(suspended orElse default)
+    case Dequeue => bus ! GameDataAvailable(queue.dequeue())
+  }
+
+  def suspended: Receive = {
+    case Resume =>
+      log.info("resuming importer")
+      become(running orElse default)
+  }
+
+  def default: Receive = {
     case FileCreated(p) =>
       log.info("file became available for processing {}", p.toString)
-      Future {
-        try {
-          bus ! GameDataAvailable(Json.parse(fileService.readAllText(p)), p)
-        } catch {
-          case _: Throwable => fileService.move(p, failedFilesPath.resolve(p.getFileName))
-        }
-      }
+      queue.enqueue(p)
+      self ! Dequeue
   }
 }

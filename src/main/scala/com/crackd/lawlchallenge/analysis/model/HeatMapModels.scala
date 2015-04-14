@@ -19,7 +19,15 @@ object HeatMapModels {
 
   case class HeatMap(m: Map[Point,Count]) {
     def +(p: Point, c: Count): HeatMap = HeatMap(m + (p -> (m.getOrElse(p, 0L) + c)))
-    def +(hm: HeatMap): HeatMap = m.foldRight(hm) { case ((p,c),a) => a + (p,c) }
+    def +(hm: HeatMap): HeatMap = {
+      var foldOnto = hm
+      var map = m
+      if (m.size > hm.m.size) {
+        foldOnto = this
+        map = hm.m
+      }
+      map.foldRight(foldOnto) { case ((p,c),a) => a + (p,c) }
+    }
   }
 
   case class HeatMaps(m: Map[EventType,HeatMap]) {

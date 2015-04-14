@@ -3,7 +3,7 @@ package com.crackd.lawlchallenge
 import akka.actor.{Actor, ActorRef, ActorRefFactory}
 import akka.pattern._
 import akka.util.Timeout
-import com.crackd.lawlchallenge.actor.AnalysisEngine.{Analysis, GetAnalysis}
+import com.crackd.lawlchallenge.actor.Bus.{AnalysisSnapshot, GetAnalysisSnapshot}
 import spray.routing._
 
 import scala.concurrent.duration.DurationInt
@@ -12,7 +12,7 @@ import scala.language.postfixOps
 /**
  * Created by trent ahrens on 4/13/15.
  */
-class RestApi(analysisEngine: ActorRef) extends Actor with HttpService {
+class RestApi(bus: ActorRef) extends Actor with HttpService {
   import context._
 
   override implicit def actorRefFactory: ActorRefFactory = context
@@ -25,8 +25,8 @@ class RestApi(analysisEngine: ActorRef) extends Actor with HttpService {
     path("data") {
       get {
         complete {
-          (analysisEngine ? GetAnalysis) map {
-            case Analysis(json) => json.toString()
+          (bus ? GetAnalysisSnapshot) map {
+            case AnalysisSnapshot(json) => json.toString()
           }
         }
       }

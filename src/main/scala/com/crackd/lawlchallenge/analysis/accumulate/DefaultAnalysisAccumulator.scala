@@ -1,4 +1,4 @@
-package com.crackd.lawlchallenge.analysis.aggregate
+package com.crackd.lawlchallenge.analysis.accumulate
 
 import com.crackd.lawlchallenge.analysis.analyzer.Analyzer
 import play.api.libs.json._
@@ -8,7 +8,7 @@ import scalaz.Monoid
 /**
  * Created by trent ahrens on 4/10/15.
  */
-class DefaultAnalyzerAggregate[T: Format](a: Analyzer[T], aggregateName: String = getClass.getCanonicalName)(implicit m: Monoid[T]) extends AnalyzerAggregate{
+class DefaultAnalysisAccumulator[T: Format](a: Analyzer[T], aggregateName: String = getClass.getCanonicalName)(implicit m: Monoid[T]) extends AnalysisAccumulator{
   var aggregate: T = m.zero
 
   override def name: String = aggregateName

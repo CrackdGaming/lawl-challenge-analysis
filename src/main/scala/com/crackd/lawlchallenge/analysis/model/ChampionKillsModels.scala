@@ -21,8 +21,16 @@ object ChampionKillsModels {
   case class ChampionKills(m: Map[(Killer,Victim),(Kills,Assists)]){
     def +(kr: Killer, v: Victim, ks: Kills, a: Assists) =
       ChampionKills(m + ((kr, v) -> (m.getOrElse((kr, v), (0L, 0L)) match { case (oks, oa) => (oks + ks, oa + a) })))
-    def +(o: ChampionKills): ChampionKills = m.foldRight(o) {
-      case (((kr,v),(ks,a)),ck) => ck + (kr, v, ks, a)
+    def +(o: ChampionKills): ChampionKills =  {
+      var foldOnto = o
+      var map = m
+      if (m.size > foldOnto.m.size) {
+        foldOnto = this
+        map = o.m
+      }
+      map.foldRight(foldOnto) {
+        case (((kr,v),(ks,a)),ck) => ck + (kr, v, ks, a)
+      }
     }
   }
 
