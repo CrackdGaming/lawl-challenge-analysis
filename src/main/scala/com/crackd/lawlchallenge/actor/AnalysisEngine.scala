@@ -33,8 +33,6 @@ class AnalysisEngine(accumulators: Seq[ActorRef]) extends Actor with ActorLoggin
 
   val maxQueue = 100
 
-  implicit val timeout = Timeout(20 seconds)
-
   val queue: mutable.Queue[Path] = mutable.Queue.empty
 
   val workers: mutable.Map[ActorRef,Boolean] = mutable.Map.empty
@@ -67,6 +65,7 @@ class AnalysisEngine(accumulators: Seq[ActorRef]) extends Actor with ActorLoggin
     case SendAnalysisIfIdle =>
       Future {
         log.info("getting snapshot")
+        implicit val timeout = Timeout(20 minutes)
         val r = Await.result(Future.traverse(accumulators)(a => a ? Serialize).mapTo[Seq[Serialized]], Duration.Inf)
         Snapshot(Json.toJson(r.map(a => (a.name,a.json)).toMap))
       } pipeTo self
@@ -83,10 +82,10 @@ class AnalysisEngine(accumulators: Seq[ActorRef]) extends Actor with ActorLoggin
     case FinishedWork(worker,p) =>
       workers += worker -> false
       finishedPaths += p
-      self ! SendAnalysisIfIdle
+      if (workers.values.forall(_ == false)) self ! SendAnalysisIfIdle
     case FailedWork(worker,p) =>
       workers += worker -> false
       finishedPaths += p
-      self ! SendAnalysisIfIdle
+      if (workers.values.forall(_ == false)) self ! SendAnalysisIfIdle
   }
 }

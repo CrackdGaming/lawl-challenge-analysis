@@ -2,16 +2,18 @@ package com.crackd.lawlchallenge.actor
 
 import java.nio.file.Path
 
-import akka.actor.{ActorLogging, Actor, ActorRef}
+import akka.actor.{Actor, ActorLogging, ActorRef}
 import akka.pattern._
+import akka.util.Timeout
 import com.crackd.lawlchallenge.abstraction.FileService
 import com.crackd.lawlchallenge.actor.AnalysisAccumulator.Add
-import com.crackd.lawlchallenge.actor.AnalysisWorker.DoWork
+import com.crackd.lawlchallenge.actor.AnalysisWorker.{DoWork, _}
 import com.crackd.lawlchallenge.analysis.analyzer.Analyzer
-import AnalysisWorker._
 import play.api.libs.json.Json
 
-import scala.concurrent.Future
+import scala.concurrent.duration.{DurationInt, Duration}
+import scala.concurrent.{Await, Future}
+import scala.language.postfixOps
 
 /**
  * Created by trent ahrens on 4/14/15.
@@ -41,10 +43,12 @@ class AnalysisWorker(l: Seq[(Analyzer[_],String,Accumulator)], fileService: File
       become(working)
       Future {
         try {
+          implicit val timeout = Timeout(10 minutes)
           val json = Json.parse(fileService.readAllText(p))
-          l.foreach {
-            case (analyzer, _, accumulator) => accumulator ! Add(analyzer(json))
-          }
+          val future = Future.sequence(l.map {
+            case (analyzer, _, accumulator) => accumulator ? Add(analyzer(json))
+          })
+          Await.ready(future, Duration.Inf)
           log.info("analyzed {}", p.toString)
           FinishedWork(self, p)
         } catch {

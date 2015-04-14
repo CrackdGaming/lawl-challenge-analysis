@@ -29,7 +29,7 @@ class Bus(analysisEngine: ActorRef, journaler: ActorRef) extends Actor with Acto
 
   var snapshot: JsValue = JsNull
 
-  system.scheduler.schedule(30 seconds, 30 seconds, analysisEngine, GetAnalysis)
+  scheduleAnalysis
 
   override def receive: Receive = {
     case GameDataAvailable(p) =>
@@ -40,6 +40,9 @@ class Bus(analysisEngine: ActorRef, journaler: ActorRef) extends Actor with Acto
     case Analysis(json, paths) =>
       snapshot = json
       journaler ! Journal(paths, json)
+      scheduleAnalysis
     case GetAnalysisSnapshot => sender() ! AnalysisSnapshot(snapshot)
   }
+
+  def scheduleAnalysis = system.scheduler.scheduleOnce(1 minute, analysisEngine, GetAnalysis)
 }
