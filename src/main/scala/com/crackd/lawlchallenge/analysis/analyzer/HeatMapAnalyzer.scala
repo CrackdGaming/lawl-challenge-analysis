@@ -18,12 +18,14 @@ class HeatMapAnalyzer extends Analyzer[HeatMaps] {
     json.events.withPositions
       .map(toAtomSeq).groupBy(_.e)
       .foldRight(HeatMapsMonid.zero) {
-      case ((e, s), hms) => hms +(e, s.foldRight(HeatMap.empty)((a, hm) => hm +(a.p, a.c)))
+      case ((e, s), hms) => hms += (e, s.foldRight(HeatMap.empty)((a, hm) => hm += (a.p, a.c)))
     }
 
   def toAtomSeq: (JsValue) => Atom = j => Atom(getEventType(j), getPoint(j), 1L)
 
-  def getPoint(json: JsValue): Point = Point((json \ "position" \ "x").as[Int], (json \ "position" \ "y").as[Int])
+  def getPoint(json: JsValue): Point = Point(downScale((json \ "position" \ "x").as[Int]), downScale((json \ "position" \ "y").as[Int]))
+
+  def downScale(l: Int): Int = l / 20
 
   def getEventType(json: JsValue): String = (json \ "eventType").as[String]
 }

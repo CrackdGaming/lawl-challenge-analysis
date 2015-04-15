@@ -44,5 +44,5 @@ class Bus(analysisEngine: ActorRef, journaler: ActorRef) extends Actor with Acto
     case GetAnalysisSnapshot => sender() ! AnalysisSnapshot(snapshot)
   }
 
-  def scheduleAnalysis = system.scheduler.scheduleOnce(1 minute, analysisEngine, GetAnalysis)
+  def scheduleAnalysis = system.scheduler.scheduleOnce(5 minutes, analysisEngine, GetAnalysis)
 }

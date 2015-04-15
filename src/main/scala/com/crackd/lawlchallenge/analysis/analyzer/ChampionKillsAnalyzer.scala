@@ -10,17 +10,17 @@ import play.api.libs.json._
 *  Created by trent ahrens on 4/9/15.
 */
 class ChampionKillsAnalyzer extends Analyzer[ChampionKills] {
-  def apply(json: JsValue): ChampionKills = ChampionKillsMonoid.append(kills(json)(events(json)), assists(json)(events(json)))
+  def apply(json: JsValue): ChampionKills = ChampionKillsMonoid.+=(kills(json)(events(json)), assists(json)(events(json)))
 
   def events(json: JsValue): Seq[JsValue] = json.events.withType(championKill)
 
-  def kills(json: JsValue)(e: Seq[JsValue]): ChampionKills = e.foldRight(ChampionKills.empty)((j,a) =>
-    a + (killerChampion(json)(j), victimChampion(json)(j), 1, 0)
+  def kills(json: JsValue)(e: Seq[JsValue]): ChampionKills = e.foldRight(ChampionKillsMonoid.zero)((j,a) =>
+    a += (killerChampion(json)(j), victimChampion(json)(j), 1, 0)
   )
 
-  def assists(json: JsValue)(e: Seq[JsValue]): ChampionKills = e.foldRight(ChampionKills.empty)((j,a) => {
+  def assists(json: JsValue)(e: Seq[JsValue]): ChampionKills = e.foldRight(ChampionKillsMonoid.zero)((j,a) => {
     ChampionKillsMonoid.append(a, assistChampions(json)(j)
-      .foldRight(ChampionKills.empty)((assist,aa) => aa + (assist, victimChampion(json)(j), 0, 1)))
+      .foldRight(ChampionKillsMonoid.zero)((assist,aa) => aa += (assist, victimChampion(json)(j), 0, 1)))
   })
 
   def killerChampion(json: JsValue): JsValue => ChampionId =

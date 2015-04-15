@@ -2,9 +2,8 @@ package com.crackd.lawlchallenge.analysis.model
 
 import java.lang.Math.max
 
+import com.crackd.lawlchallenge.MutableMonoid
 import play.api.libs.json.Json
-
-import scalaz.Monoid
 
 /**
  * Created by trent ahrens on 4/11/15.
@@ -95,7 +94,7 @@ object StatModels {
         max(o.mostUnitsHealed, mostUnitsHealed), o.totalUnitsHealed + totalUnitsHealed)
   }
   
-  implicit object StatsMonoid extends Monoid[Stats] {
+  implicit object StatsMonoid extends MutableMonoid[Stats] {
     override def zero: Stats = Stats(
       0L, 0L, 0L,
       Gold(0L, 0L, 0L, 0L),
@@ -106,6 +105,8 @@ object StatModels {
         Heal(0L, 0L, 0L, 0L)))
 
     override def append(f1: Stats, f2: => Stats): Stats = f1 + f2
+
+    override def +=(left: Stats, right: Stats): Stats = left + right
   }
 
   implicit val healFormat = Json.format[Heal]

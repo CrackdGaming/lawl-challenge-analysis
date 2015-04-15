@@ -1,2 +1,2 @@
--mem 2000
+-mem 4000
 -Dlogback.configurationFile=logback-prod.xml

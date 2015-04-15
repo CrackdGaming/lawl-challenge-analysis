@@ -11,7 +11,7 @@ import com.crackd.lawlchallenge.actor.AnalysisAccumulator.Deserialize
 import com.crackd.lawlchallenge.actor._
 import com.crackd.lawlchallenge.analysis.analyzer._
 import com.crackd.lawlchallenge.analysis.model.ChampionKillsModels.{ChampionKills, ChampionKillsMonoid, championKillsFormat}
-import com.crackd.lawlchallenge.analysis.model.ChampionsModels.{ChampionsMonoid, Champions, championsFormat}
+import com.crackd.lawlchallenge.analysis.model.ChampionsModels.{Champions, ChampionsMonoid, championsFormat}
 import com.crackd.lawlchallenge.analysis.model.GameModels.{Game, GameMonoid, gameFormat}
 import com.crackd.lawlchallenge.analysis.model.HeatMapModels.{HeatMaps, HeatMapsMonid, heatMapsFormat}
 import com.crackd.lawlchallenge.analysis.model.StatModels.{Stats, StatsMonoid, statsFormat}
@@ -26,8 +26,8 @@ import scala.concurrent.duration.DurationInt
 import scala.language.postfixOps
 
 /**
-*  Created by trent ahrens on 4/7/15.
-*/
+ *  Created by trent ahrens on 4/7/15.
+ */
 object Main extends App {
   implicit val system = ActorSystem()
   implicit val timeout = Timeout(6 seconds)

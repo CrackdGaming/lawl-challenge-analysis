@@ -7,5 +7,5 @@ import play.api.libs.json._
  * Created by trent ahrens on 4/9/15.
  */
 class GameAnalyzer extends Analyzer[Game] {
-  override def apply(json: JsValue): Game = Game(1, (json \ "matchDuration").as[Long])
+  override def apply(json: JsValue): Game = Game(1, (json \ "matchDuration").as[Long], (json \ "matchDuration").as[Long])
 }

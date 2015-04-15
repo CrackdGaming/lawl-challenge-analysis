@@ -13,7 +13,7 @@ class ChampionsAnalyzer extends Analyzer[Champions] {
     json.participants.value
       .map(j => ((j \ "participantId").as[Int], (j \ "championId").as[Int]))
       .map(ids => (ids._2, Champion(participantWinCount(ids._1, json), 1, participantStatAnalyzer(ids._1).apply(json))))
-      .foldRight(ChampionsMonoid.zero) { case ((id, c), a) => a + (id, c) }
+      .foldRight(ChampionsMonoid.zero) { case ((id, c), a) => a += (id, c) }
 
   def participantWinCount(id: ParticipantId, json: JsValue) =
     (json \ "teams").as[JsArray].value.find(j => (j \ "teamId").as[Int] == json.participantTeamId(id))
