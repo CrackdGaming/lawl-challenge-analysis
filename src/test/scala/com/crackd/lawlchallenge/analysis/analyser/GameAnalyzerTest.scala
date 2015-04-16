@@ -12,7 +12,7 @@ class GameAnalyzerTest extends UnitSpec {
     val input = JsonLoader.load("/game-input.json")
     val sut = new GameAnalyzer()
     val actual = sut(input)
-    val expected = Game(1, 1431)
+    val expected = Game(1, 1431, 1431)
     actual shouldBe expected
   }
 }

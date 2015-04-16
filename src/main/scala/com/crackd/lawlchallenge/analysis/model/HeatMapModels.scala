@@ -56,16 +56,11 @@ object HeatMapModels {
 
   implicit val heatMapPairFormat = new Format[(Point,Count)] {
     override def writes(o: (Point, Count)): JsValue = o match {
-      case (p, c) => Json.obj(
-        "x" -> p.x,
-        "y" -> p.y,
-        "c" -> c
-      )
+      case (p, c) => Json.arr(p.x,p.y,c)
     }
 
     override def reads(json: JsValue): JsResult[(Point, Count)] = JsSuccess((
-      Point((json \ "x").as[Int], (json \ "y").as[Int]),
-      (json \ "c").as[Long]
+      Point(json(0).as[Int], json(1).as[Int]),json(2).as[Long]
       ))
   }
 
