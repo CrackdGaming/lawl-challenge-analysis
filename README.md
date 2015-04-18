@@ -37,3 +37,5 @@ on average. Additional gains could be made by:
 - Running akka in cluster mode backed by distributed file system such as HDFS.
 - Hooked up to a live data stream and with akka.io scala in an elastic manner to handle any
 load.
+- [LMAX](https://lmax-exchange.github.io/disruptor/) was another avenue I thought about however the patterns of 
+processing lend itself much better in a distributed environment.
